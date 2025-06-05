@@ -70,6 +70,7 @@ Antes de começar, certifique-se de ter instalado e configurado:
 | IDE Java                         | IntelliJ IDEA / Eclipse / VS Code     |
 
 > 💡 **Dica:** Caso não tenha o [OCI CLI](https://docs.oracle.com/en-us/iaas/Content/API/SDKDocs/cliinstall.htm), você pode usar para validar manualmente operações de bucket (**ls**, **cp**, **rm**) antes de rodar sua aplicação.
+> 💡 **Dica:** Sete seu bucket e suas chaves no properties.
 
 ---
 
