@@ -1,0 +1,93 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.5.0</version>
+		<relativePath/>
+	</parent>
+
+	<groupId>com.bucketjava</groupId>
+	<artifactId>demo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>demo</name>
+
+	<properties>
+		<java.version>21</java.version>
+		<!-- usaremos a mesma versão para todas as dependências OCI -->
+		<oci.sdk.version>2.46.0</oci.sdk.version>
+		<!-- Jersey 2.35 é compatível com javax.ws.rs-api 2.1.1 -->
+		<jersey.version>2.35</jersey.version>
+	</properties>
+
+	<dependencyManagement>
+		<!-- garante que, se qualquer transitive dependency tentar puxar jersey-common 3.x,
+             faremos override para jersey-common 2.35 -->
+		<dependencies>
+			<dependency>
+				<groupId>org.glassfish.jersey.core</groupId>
+				<artifactId>jersey-common</artifactId>
+				<version>${jersey.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- 1) Spring Boot Web -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<!-- a version aqui já vem do parent 3.5.0, não precisa repetir -->
+		</dependency>
+
+		<!-- 2) OCI SDK para Object Storage -->
+		<dependency>
+			<groupId>com.oracle.oci.sdk</groupId>
+			<artifactId>oci-java-sdk-objectstorage</artifactId>
+			<version>${oci.sdk.version}</version>
+		</dependency>
+
+		<!-- 3) JAX-RS API “javax.ws.rs” 2.1.1 -->
+		<dependency>
+			<groupId>javax.ws.rs</groupId>
+			<artifactId>javax.ws.rs-api</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+
+		<!-- 4) Jersey-client 2.x, compatível com javax.ws.rs-api 2.1.1 -->
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>${jersey.version}</version>
+			<!-- não precisa excluir nada aqui, pois já fixamos jersey-common 2.35 via dependencyManagement -->
+		</dependency>
+
+		<!-- 5) (Opcional) Suporte JSON via Jackson dentro do Jersey 2.35 -->
+		<dependency>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+
+		<!-- 6) (Opcional) Lombok, se você usar no projeto -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.38</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>
